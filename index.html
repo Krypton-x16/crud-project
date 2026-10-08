@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Управляйте списком задач с помощью DummyJSON Todos API."
+    />
+    <meta name="theme-color" content="#f6f7fb" />
+    <title>Todos CRUD — список задач</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Основная навигация">
+        <a class="brand" href="./" aria-label="Taskflow — главная">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="m5 12.5 4.2 4.2L19.5 6.5" />
+              <path d="M20 12a8 8 0 1 1-4-6.93" />
+            </svg>
+          </span>
+          <span>taskflow</span>
+        </a>
+
+        <p class="nav-caption">РАБОЧЕЕ ПРОСТРАНСТВО</p>
+        <nav>
+          <a class="nav-link active" href="#todos" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 6h11M9 12h11M9 18h11" />
+              <path d="m3.5 6 .9.9L6 5.2M3.5 12l.9.9L6 11.2M3.5 18l.9.9L6 17.2" />
+            </svg>
+            Todos CRUD
+            <span class="nav-indicator" aria-hidden="true"></span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="api-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div>
+              <strong>DummyJSON API</strong>
+              <span>Демо-подключение</span>
+            </div>
+          </div>
+          <p class="sidebar-note">Изменения доступны в этой сессии и не сохраняются на сервере.</p>
+        </div>
+      </aside>
+
+      <main class="main-content" id="todos">
+        <header class="topbar">
+          <div class="breadcrumbs">
+            <span>Рабочее пространство</span>
+            <span class="breadcrumb-divider">/</span>
+            <strong>Todos CRUD</strong>
+          </div>
+          <a class="api-link" href="https://dummyjson.com/docs/todos" target="_blank" rel="noreferrer">
+            Документация API
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M9 3h4v4M13 3 7.5 8.5M11 9v3.5H3.5V5H7" />
+            </svg>
+          </a>
+        </header>
+
+        <section class="page-content" aria-labelledby="page-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">ВАШ СПИСОК</p>
+              <h1 id="page-title">Todos CRUD</h1>
+              <p class="page-subtitle">Все задачи в одном месте. Планируйте, отмечайте и двигайтесь дальше.</p>
+            </div>
+            <button class="button button-primary" id="add-todo-button" type="button">
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 4v12M4 10h12" />
+              </svg>
+              Новая задача
+            </button>
+          </div>
+
+          <section class="summary-grid" aria-label="Сводка по задачам">
+            <article class="summary-card">
+              <div class="summary-icon summary-icon-purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M3.5 6h.01M3.5 12h.01M3.5 18h.01" /></svg>
+              </div>
+              <div><span>Всего задач</span><strong id="total-count">—</strong></div>
+              <span class="summary-accent" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="summary-icon summary-icon-amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3 2" /></svg>
+              </div>
+              <div><span>В процессе</span><strong id="pending-count">—</strong></div>
+              <span class="summary-accent accent-amber" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="summary-icon summary-icon-green" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19.5 6.5" /></svg>
+              </div>
+              <div><span>Выполнено</span><strong id="completed-count">—</strong></div>
+              <span class="summary-accent accent-green" aria-hidden="true"></span>
+            </article>
+          </section>
+
+          <section class="todos-panel" aria-labelledby="list-title">
+            <div class="panel-heading">
+              <div>
+                <h2 id="list-title">Мои задачи</h2>
+                <p id="list-description">Управляйте задачами и отслеживайте прогресс</p>
+              </div>
+              <label class="search-box">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <circle cx="8.8" cy="8.8" r="5.8" />
+                  <path d="m13 13 4 4" />
+                </svg>
+                <input id="search-input" type="search" placeholder="Найти задачу..." aria-label="Найти задачу" />
+                <kbd>/</kbd>
+              </label>
+            </div>
+
+            <div class="list-toolbar">
+              <div class="filter-tabs" role="group" aria-label="Фильтр задач">
+                <button class="filter-tab selected" type="button" data-filter="all" aria-pressed="true">Все <span id="all-filter-count">0</span></button>
+                <button class="filter-tab" type="button" data-filter="pending" aria-pressed="false">В процессе</button>
+                <button class="filter-tab" type="button" data-filter="completed" aria-pressed="false">Выполнено</button>
+              </div>
+              <div class="list-toolbar-actions">
+                <span class="list-count" id="visible-count"></span>
+                <button class="clear-list-button" id="clear-list-button" type="button" hidden>Очистить список</button>
+              </div>
+            </div>
+
+            <div id="load-error" class="load-error" role="alert" hidden>
+              <span class="error-icon" aria-hidden="true">!</span>
+              <div><strong>Не удалось загрузить задачи</strong><p id="error-message"></p></div>
+              <button class="button button-secondary" id="retry-button" type="button">Попробовать снова</button>
+            </div>
+            <div id="loading-state" class="state-message" role="status">
+              <span class="spinner" aria-hidden="true"></span>
+              <span>Загружаем задачи...</span>
+            </div>
+            <div id="empty-state" class="empty-state" hidden>
+              <span class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M9 5.5h14a2.5 2.5 0 0 1 2.5 2.5v18.5H6.5V8A2.5 2.5 0 0 1 9 5.5Z" /><path d="M11 12h10M11 17h10M11 22h6" /></svg>
+              </span>
+              <h3 id="empty-title">Пока нет задач</h3>
+              <p id="empty-description">Добавьте первую задачу, чтобы начать.</p>
+              <button class="button button-primary" id="empty-add-button" type="button">Создать задачу</button>
+            </div>
+            <ul class="todo-list" id="todo-list" aria-label="Задачи"></ul>
+            <div class="list-footer" id="list-footer" hidden>
+              <span class="footer-check" aria-hidden="true">✓</span>
+              <span>Вы посмотрели все задачи</span>
+              <span class="footer-sparkle" aria-hidden="true">✦</span>
+            </div>
+          </section>
+
+          <footer class="page-footer">
+            <span>Данные предоставлены <a href="https://dummyjson.com/" target="_blank" rel="noreferrer">DummyJSON</a></span>
+            <span class="demo-badge"><span aria-hidden="true">i</span> Демо-режим — изменения локальные</span>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="todo-dialog" id="todo-dialog" aria-labelledby="dialog-title">
+      <form id="todo-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">СПИСОК ЗАДАЧ</p>
+            <h2 id="dialog-title">Новая задача</h2>
+          </div>
+          <button class="icon-button dialog-close" id="dialog-close" type="button" aria-label="Закрыть">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" /></svg>
+          </button>
+        </div>
+        <label class="field-label" for="todo-text">Название задачи</label>
+        <textarea id="todo-text" name="todo" rows="3" maxlength="200" placeholder="Например, подготовить еженедельный отчёт" required></textarea>
+        <p class="field-hint">До 200 символов</p>
+        <label class="field-label" for="todo-user">ID пользователя</label>
+        <input id="todo-user" name="userId" type="number" min="1" value="1" required />
+        <p class="form-error" id="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button button-secondary" id="cancel-button" type="button">Отмена</button>
+          <button class="button button-primary" id="save-button" type="submit">
+            <span class="button-spinner" aria-hidden="true" hidden></span>
+            <span id="save-button-label">Создать задачу</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
+  </body>
+</html>
