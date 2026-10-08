@@ -297,7 +297,6 @@ async function toggleTodo(todo) {
     );
     render();
     showToast(error.message, "error");
-  } finally {
   }
 }
 
