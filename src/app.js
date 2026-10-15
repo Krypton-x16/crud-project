@@ -38,6 +38,8 @@ const elements = {
   pendingCount: document.querySelector("#pending-count"),
   completedCount: document.querySelector("#completed-count"),
   allFilterCount: document.querySelector("#all-filter-count"),
+  pendingFilterCount: document.querySelector("#pending-filter-count"),
+  completedFilterCount: document.querySelector("#completed-filter-count"),
   visibleCount: document.querySelector("#visible-count"),
   clearList: document.querySelector("#clear-list-button"),
 };
@@ -122,6 +124,8 @@ function render() {
   elements.pendingCount.textContent = String(pending);
   elements.completedCount.textContent = String(completed);
   elements.allFilterCount.textContent = String(todos.length);
+  elements.pendingFilterCount.textContent = String(pending);
+  elements.completedFilterCount.textContent = String(completed);
   elements.visibleCount.textContent = `${visibleTodos.length} ${pluralizeTasks(visibleTodos.length)}`;
   elements.clearList.hidden = todos.length === 0;
   elements.list.replaceChildren(...visibleTodos.map(createTodoElement));
