@@ -493,9 +493,12 @@ async function toggleTodo(todo) {
 }
 
 async function removeTodo(todo) {
+  if (busyTodos.has(todo.id)) return;
   if (!window.confirm(`Удалить задачу «${todo.todo}»? Это действие нельзя отменить.`)) {
     return;
   }
+  busyTodos.add(todo.id);
+  render();
   try {
     if (!todo.localOnly) {
       await deleteTodo(todo.id);
@@ -508,6 +511,9 @@ async function removeTodo(todo) {
     );
   } catch (error) {
     showToast(error.message, "error");
+  } finally {
+    busyTodos.delete(todo.id);
+    render();
   }
 }
 
