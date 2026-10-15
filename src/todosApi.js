@@ -30,14 +30,19 @@ async function request(path = "", options = {}) {
   return response.json();
 }
 
-export function getTodos() {
-  return request("?limit=0");
+export function getTodos(order = "") {
+  const params = new URLSearchParams({ limit: "0" });
+  if (order) {
+    params.set("sortBy", "todo");
+    params.set("order", order);
+  }
+  return request(`?${params}`);
 }
 
-export function createTodo(todo, userId) {
+export function createTodo(todo, userId, completed = false) {
   return request("/add", {
     method: "POST",
-    body: JSON.stringify({ todo, completed: false, userId }),
+    body: JSON.stringify({ todo, completed, userId }),
   });
 }
 

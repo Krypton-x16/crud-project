@@ -125,6 +125,15 @@
               </label>
             </div>
 
+            <div class="sort-toolbar">
+              <label for="sort-select">Сортировка (через API)</label>
+              <select id="sort-select">
+                <option value="">Без сортировки</option>
+                <option value="asc">По названию: А–Я / A–Z</option>
+                <option value="desc">По названию: Я–А / Z–A</option>
+              </select>
+              <span id="sort-status" role="status"></span>
+            </div>
             <div class="list-toolbar">
               <div class="filter-tabs" role="group" aria-label="Фильтр задач">
                 <button class="filter-tab selected" type="button" data-filter="all" aria-pressed="true">Все <span id="all-filter-count">0</span></button>
@@ -184,8 +193,18 @@
         <label class="field-label" for="todo-text">Название задачи</label>
         <textarea id="todo-text" name="todo" rows="3" maxlength="200" placeholder="Например, подготовить еженедельный отчёт" required></textarea>
         <p class="field-hint">До 200 символов</p>
-        <label class="field-label" for="todo-user">ID пользователя</label>
-        <input id="todo-user" name="userId" type="number" min="1" value="1" required />
+        <label class="field-label" for="todo-user">Исполнитель</label>
+        <select id="todo-user" name="userId" required></select>
+        <div class="user-sort-controls">
+          <label for="user-sort">Сортировка пользователей по имени (через API)</label>
+          <select id="user-sort">
+            <option value="">Без сортировки</option>
+            <option value="asc">A–Z</option>
+            <option value="desc">Z–A</option>
+          </select>
+          <span id="user-sort-status" role="status"></span>
+        </div>
+        <label class="completion-field"><input id="todo-completed" name="completed" type="checkbox" /> Уже выполнено</label>
         <p class="form-error" id="form-error" role="alert" hidden></p>
         <div class="dialog-actions">
           <button class="button button-secondary" id="cancel-button" type="button">Отмена</button>
@@ -197,6 +216,30 @@
       </form>
     </dialog>
 
+    <dialog class="todo-dialog profile-dialog" id="profile-dialog" aria-labelledby="profile-title">
+      <div class="dialog-heading">
+        <h2 id="profile-title">Профиль пользователя</h2>
+        <button class="icon-button dialog-close" id="profile-close" type="button" aria-label="Закрыть профиль">✕</button>
+      </div>
+      <div class="profile-layout">
+        <section id="profile-info" aria-label="Информация о пользователе"></section>
+        <section class="profile-tasks" aria-label="Задачи пользователя">
+          <div class="profile-task-controls">
+            <button class="button button-primary" id="profile-add-todo" type="button">Добавить задачу</button>
+            <label for="profile-sort">Сортировка задач (через API)</label>
+            <select id="profile-sort">
+              <option value="">Без сортировки</option>
+              <option value="asc">A–Z</option>
+              <option value="desc">Z–A</option>
+            </select>
+            <span id="profile-sort-status" role="status"></span>
+          </div>
+          <h3 id="profile-tasks-title">Задачи пользователя</h3>
+          <ul class="todo-list" id="profile-todo-list"></ul>
+          <p id="profile-empty" hidden>У пользователя пока нет задач.</p>
+        </section>
+      </div>
+    </dialog>
     <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>
